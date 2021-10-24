@@ -1,7 +1,8 @@
 # React Authentication Crash Course (with Firebase v9)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-https://youtu.be/wkpXooyFGks
+
+Video tutorial: https://youtu.be/wkpXooyFGks
 
 ## Available Scripts
 
