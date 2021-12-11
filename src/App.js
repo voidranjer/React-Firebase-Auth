@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 import { signup, login, logout, useAuth } from "./firebase";
+import Profile from "./Profile";
 
 export default function App() {
   const [ loading, setLoading ] = useState(false);
@@ -11,11 +12,11 @@ export default function App() {
 
   async function handleSignup() {
     setLoading(true);
-    // try {
+    try {
       await signup(emailRef.current.value, passwordRef.current.value);
-    // } catch {
-      // alert("Error!");
-    // }
+    } catch {
+      alert("Error!");
+    }
     setLoading(false);
   }
 
@@ -44,14 +45,24 @@ export default function App() {
       
       <div>Currently logged in as: { currentUser?.email } </div>
 
-      <div id="fields">
-        <input ref={emailRef} placeholder="Email" />
-        <input ref={passwordRef} type="password" placeholder="Password" />
-      </div>
+      {!currentUser && 
+        <>
+          <div className="fields">
+            <input ref={emailRef} placeholder="Email" />
+            <input ref={passwordRef} type="password" placeholder="Password" />
+          </div>
 
-      <button disabled={ loading || currentUser } onClick={handleSignup}>Sign Up</button>
-      <button disabled={ loading || currentUser } onClick={handleLogin}>Log In</button>
-      <button disabled={ loading || !currentUser } onClick={handleLogout}>Log Out</button>
+          <button disabled={ loading } onClick={handleSignup}>Sign Up</button>
+          <button disabled={ loading } onClick={handleLogin}>Log In</button>
+        </>
+      }
+
+      {currentUser && 
+        <>
+          <Profile />
+          <button disabled={ loading || !currentUser } onClick={handleLogout}>Log Out</button>
+        </>
+      }
 
     </div>
   );
